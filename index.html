@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mariana — Portfólio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23BC4B32' d='M12 0C13.8 7.2 16.8 10.2 24 12C16.8 13.8 13.8 16.8 12 24C10.2 16.8 7.2 13.8 0 12C7.2 10.2 10.2 7.2 12 0Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F0E8;
+    --paper:#FCF8F2;
+    --ink:#221B15;
+    --ink-soft:#6E5F52;
+    --acc:#BC4B32;
+    --acc-soft:#F0D8C9;
+    --line:rgba(34,27,21,.16);
+    --dark:#221B15;
+    --dark-line:rgba(246,240,232,.16);
+    --serif:"Fraunces",Georgia,serif;
+    --mono:"Space Mono",ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:96px}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:var(--serif);font-optical-sizing:auto;
+    font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--acc);color:var(--bg)}
+  a{color:inherit}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  :focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+  .mono{font-family:var(--mono)}
+  em{font-style:italic;color:var(--acc)}
+
+  /* textura de papel sutil */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9990;
+    opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+
+  /* ---------- barra de progresso ---------- */
+  #progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--acc);z-index:9999}
+
+  /* ---------- navegação ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.05rem;text-decoration:none}
+  .brand svg{width:15px;height:15px;fill:var(--acc);animation:spin 9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .nav-links{display:flex;gap:clamp(14px,2.4vw,32px);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+  .nav-links a{text-decoration:none;position:relative;padding:4px 0}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--acc);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.7,0,.3,1)}
+  .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+  .nav-right{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.25}}
+  #menuBtn{display:none;flex-direction:column;gap:6px;padding:8px}
+  #menuBtn span{display:block;width:24px;height:2px;background:var(--ink);transition:transform .3s,opacity .3s}
+  #menuBtn.open span:nth-child(1){transform:translateY(4px) rotate(45deg)}
+  #menuBtn.open span:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
+
+  /* menu mobile */
+  #mobileMenu{position:fixed;inset:0;background:var(--dark);color:var(--bg);z-index:890;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(24px,7vw,80px);gap:6px;clip-path:inset(0 0 100% 0);transition:clip-path .55s cubic-bezier(.76,0,.24,1)}
+  #mobileMenu.open{clip-path:inset(0 0 0 0)}
+  #mobileMenu a{font-size:clamp(2.4rem,10vw,4rem);font-style:italic;text-decoration:none;line-height:1.25;border-bottom:1px solid var(--dark-line);padding:10px 0;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s,color .3s}
+  #mobileMenu.open a{opacity:1;transform:none}
+  #mobileMenu a:hover{color:#E39B7F}
+  #mobileMenu .mm-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:rgba(246,240,232,.5);margin-bottom:20px}
+
+  /* ---------- hero ---------- */
+  #inicio{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:100px;position:relative}
+  .hero-top{display:flex;justify-content:space-between;gap:20px;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:clamp(10px,2vh,26px)}
+  .hello{font-family:var(--mono);font-size:clamp(.8rem,1.6vw,1rem);color:var(--ink-soft);margin-bottom:6px}
+  .hello b{color:var(--acc);font-weight:400}
+  h1{
+    font-size:clamp(4.2rem,19vw,17.5rem);
+    line-height:.95;font-weight:500;letter-spacing:-.025em;
+    font-variation-settings:'opsz' 144,'wght' 480,'SOFT' 0,'WONK' 0;
+    user-select:none;white-space:nowrap;
+  }
+  h1 .ltr{display:inline-block;will-change:transform}
+  .hero-pronoun{text-align:right;font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);margin-top:10px}
+  .hero-bottom{
+    display:grid;grid-template-columns:1fr 1.4fr auto;gap:clamp(18px,4vw,60px);
+    border-top:1px solid var(--line);margin-top:clamp(18px,3vh,36px);padding:22px 0 30px;align-items:start;
+  }
+  .hb-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:8px}
+  .hb-now{font-size:1.05rem;font-weight:500}
+  .hb-future{font-style:italic;font-size:1.15rem;color:var(--acc)}
+  .scroll-cue{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft)}
+  .scroll-cue svg{width:14px;height:20px;animation:bob 1.8s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(5px)}}
+  .hero-flor{position:absolute;top:16vh;right:clamp(20px,6vw,90px);width:clamp(46px,6vw,84px);height:auto;fill:var(--acc);opacity:.9;animation:spin 14s linear infinite}
+
+  /* ---------- marquee ---------- */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:13px 0;background:var(--paper)}
+  .marquee-track{display:flex;gap:0;width:max-content;animation:slide 32s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  .marquee-track span{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:26px;padding-right:26px;white-space:nowrap}
+  .marquee-track svg{width:11px;height:11px;fill:var(--acc);flex:none}
+
+  /* ---------- seções: base ---------- */
+  section{padding:clamp(80px,12vh,150px) 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:clamp(36px,6vh,70px)}
+  .sec-num{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);display:flex;align-items:center;gap:8px;flex:none}
+  .sec-num svg{width:10px;height:10px;fill:var(--acc)}
+  h2{font-size:clamp(2.6rem,6.5vw,5rem);font-weight:500;line-height:1.05;letter-spacing:-.02em}
+
+  /* ---------- sobre ---------- */
+  #sobre .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,6vw,90px);align-items:start}
+  .prose p{font-size:clamp(1.1rem,1.6vw,1.3rem);line-height:1.7;margin-bottom:1.2em;max-width:56ch}
+  .prose p:first-child::first-letter{
+    font-size:3.2em;float:left;line-height:.82;padding-right:.12em;font-style:italic;color:var(--acc);font-weight:600;
+  }
+  .prose .assina{font-style:italic;font-size:1.2rem;color:var(--acc)}
+  .big17{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:34px;display:flex;align-items:center;gap:12px}
+  .big17 b{font-family:var(--serif);font-style:italic;font-size:2.6rem;color:var(--acc);font-weight:500;letter-spacing:0}
+
+  /* arquivo de código */
+  .code-card{background:var(--dark);color:#EFE6DA;border-radius:10px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(34,27,21,.45)}
+  .code-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--dark-line);font-family:var(--mono);font-size:.72rem;color:rgba(239,230,218,.55)}
+  .code-bar .fname{display:flex;align-items:center;gap:10px}
+  .code-bar .fname i{width:9px;height:9px;border-radius:50%;background:var(--acc);display:inline-block}
+  .run-btn{font-family:var(--mono);font-size:.72rem;display:flex;align-items:center;gap:7px;border:1px solid var(--dark-line);border-radius:99px;padding:6px 14px;transition:.25s;color:#EFE6DA}
+  .run-btn:hover{border-color:var(--acc);color:#E39B7F}
+  .run-btn svg{width:9px;height:9px;fill:currentColor}
+  pre{font-family:var(--mono);font-size:.83rem;line-height:1.75;padding:22px 22px 10px;overflow-x:auto}
+  .c-kw{color:#E88C7D}.c-st{color:#D9A867}.c-pr{color:#9DB1A5}.c-cm{color:#8A7466;font-style:italic}.c-fn{color:#E3C088}.c-pu{color:#B4A292}
+  .console{border-top:1px solid var(--dark-line);padding:18px 22px 22px;font-family:var(--mono);font-size:.8rem;min-height:118px}
+  .console .cl{white-space:pre-wrap;word-break:break-word}
+  .console .cl.in{color:#9DB1A5}
+  .console .cl.out{color:#EFE6DA}
+  .console .cl.out::before{content:"";margin-right:0}
+  .console .cl .caret{display:inline-block;width:8px;height:15px;background:#E39B7F;vertical-align:-2px;animation:blink .9s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ---------- habilidades ---------- */
+  #habilidades .list-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);padding-bottom:12px;border-bottom:1px solid var(--ink)}
+  .skill{
+    display:grid;grid-template-columns:60px minmax(0,1.1fr) minmax(0,1.3fr) 220px 60px;
+    gap:clamp(10px,2vw,28px);align-items:center;
+    padding:22px 10px;border-bottom:1px solid var(--line);
+    transition:background .3s,padding .3s;position:relative;
+  }
+  .skill:hover{background:var(--acc-soft);padding-left:22px}
+  .skill .s-n{font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);transition:color .3s}
+  .skill:hover .s-n{color:var(--acc)}
+  .skill .s-name{font-size:clamp(1.25rem,2.4vw,1.8rem);font-weight:500;letter-spacing:-.01em;transition:font-style .2s}
+  .skill:hover .s-name{font-style:italic;color:var(--acc)}
+  .skill .s-desc{font-size:.95rem;color:var(--ink-soft)}
+  .skill .s-lvl{display:flex;flex-direction:column;gap:7px}
+  .skill .s-lvl span{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft)}
+  .skill .s-bar{height:2px;background:var(--line);position:relative}
+  .skill .s-bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--acc);transition:width 1.2s cubic-bezier(.6,0,.2,1)}
+  .skill .s-pct{font-family:var(--mono);font-size:.75rem;text-align:right;color:var(--ink-soft)}
+
+  /* ---------- projetos ---------- */
+  #projetos{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .proj{
+    display:grid;grid-template-columns:70px minmax(0,1fr) auto auto;gap:clamp(12px,2vw,30px);align-items:center;
+    padding:clamp(24px,4vh,40px) 10px;border-bottom:1px solid var(--line);cursor:pointer;
+    transition:padding .35s cubic-bezier(.6,0,.2,1);
+  }
+  .proj:first-of-type{border-top:1px solid var(--ink)}
+  .proj:hover{padding-left:26px}
+  .proj .p-n{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}
+  .proj .p-title{font-size:clamp(1.9rem,4.6vw,3.6rem);font-weight:500;line-height:1.05;letter-spacing:-.02em;transition:color .3s}
+  .proj:hover .p-title{font-style:italic;color:var(--acc)}
+  .proj .p-tags{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);text-align:right}
+  .proj .p-arrow{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:.3s;flex:none}
+  .proj .p-arrow svg{width:13px;height:13px;stroke:currentColor;transition:transform .3s}
+  .proj:hover .p-arrow{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+  .proj:hover .p-arrow svg{transform:rotate(45deg)}
+  .proj-foot{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);padding-top:22px}
+
+  /* preview flutuante */
+  #preview{
+    position:fixed;top:0;left:0;width:280px;height:190px;z-index:800;pointer-events:none;
+    opacity:0;transform:translate(-50%,-50%) scale(.85);transition:opacity .25s,scale .25s;
+    border-radius:6px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(34,27,21,.5);
+  }
+  #preview.on{opacity:1}
+  #preview .tint{position:absolute;inset:0;background:var(--acc)}
+  #preview img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(1.05);mix-blend-mode:multiply;display:block}
+
+  /* ---------- plano (seção escura) ---------- */
+  #plano{background:var(--dark);color:var(--bg)}
+  #plano .sec-num{color:rgba(246,240,232,.55)}
+  #plano .sec-num svg{fill:#E39B7F}
+  .manifesto{font-size:clamp(1.7rem,3.6vw,3rem);line-height:1.35;font-weight:400;max-width:22ch;margin-bottom:clamp(50px,9vh,100px)}
+  .manifesto i{font-style:italic;color:#E39B7F}
+  .timeline{position:relative;padding-left:clamp(30px,5vw,70px)}
+  .timeline::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:var(--dark-line)}
+  .t-item{position:relative;padding-bottom:clamp(44px,7vh,80px)}
+  .t-item:last-child{padding-bottom:0}
+  .t-item .t-flor{position:absolute;left:calc(-1 * clamp(30px,5vw,70px) + 0px);top:6px;width:13px;height:13px;fill:#E39B7F;transform:translateX(0)}
+  .t-item .t-when{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,240,232,.5);display:block;margin-bottom:10px}
+  .t-item h3{font-size:clamp(1.5rem,3vw,2.3rem);font-weight:500;margin-bottom:12px;letter-spacing:-.01em}
+  .t-item p{color:rgba(246,240,232,.75);max-width:58ch;font-size:1.05rem;line-height:1.7}
+  .t-item.sonho h3{font-style:italic;color:#E39B7F}
+  .t-item .t-tag{display:inline-block;font-family:var(--mono);font-size:.65rem;border:1px solid var(--dark-line);border-radius:99px;padding:5px 12px;margin-top:16px;color:rgba(246,240,232,.6)}
+
+  /* ---------- contato ---------- */
+  #contato{text-align:left}
+  .contact-lead{font-size:clamp(1.15rem,1.8vw,1.4rem);color:var(--ink-soft);max-width:52ch;margin-bottom:clamp(36px,6vh,64px)}
+  .email-btn{
+    display:inline-flex;align-items:center;gap:clamp(12px,2vw,26px);
+    font-family:var(--serif);font-size:clamp(1.7rem,5.5vw,4.6rem);font-weight:500;letter-spacing:-.02em;
+    border-bottom:2px solid var(--ink);padding-bottom:8px;text-align:left;
+    transition:color .3s,border-color .3s;line-height:1.2;word-break:break-all;
+  }
+  .email-btn:hover{color:var(--acc);border-color:var(--acc);font-style:italic}
+  .email-btn .copy-ico{width:clamp(20px,3vw,34px);height:auto;flex:none;stroke:currentColor}
+  .contact-hint{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);margin-top:16px}
+  .socials{display:flex;flex-wrap:wrap;gap:clamp(18px,4vw,60px);margin-top:clamp(44px,7vh,80px);border-top:1px solid var(--line);padding-top:28px}
+  .socials div span{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .socials div b{font-weight:500;font-size:1.05rem}
+  .socials div b i{font-style:italic;color:var(--acc)}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 34px}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft)}
+  footer .f-flor{width:12px;height:12px;fill:var(--acc);animation:spin 9s linear infinite;vertical-align:-2px;margin:0 4px}
+
+  /* ---------- modal ---------- */
+  #modalOverlay{position:fixed;inset:0;background:rgba(34,27,21,.55);z-index:1000;opacity:0;pointer-events:none;transition:opacity .35s}
+  #modalOverlay.open{opacity:1;pointer-events:auto}
+  #modal{
+    position:fixed;z-index:1001;top:50%;left:50%;transform:translate(-50%,-46%) scale(.96);
+    width:min(720px,calc(100vw - 32px));max-height:min(86vh,900px);overflow-y:auto;
+    background:var(--bg);border:1px solid var(--line);border-radius:12px;
+    opacity:0;pointer-events:none;transition:opacity .35s,transform .45s cubic-bezier(.5,0,.2,1);
+  }
+  #modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+  .m-media{position:relative;aspect-ratio:16/8.5;overflow:hidden;background:var(--acc)}
+  .m-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(1.05);mix-blend-mode:multiply;display:block}
+  .m-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;z-index:2;transition:.25s}
+  .m-close:hover{background:var(--acc);border-color:var(--acc)}
+  .m-close:hover svg{stroke:var(--bg)}
+  .m-close svg{width:14px;height:14px;stroke:var(--ink)}
+  .m-body{padding:clamp(24px,4vw,44px)}
+  .m-meta-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+  .m-status{border:1px solid var(--acc);color:var(--acc);border-radius:99px;padding:5px 12px;font-size:.65rem}
+  .m-body h3{font-size:clamp(2rem,5vw,3rem);font-weight:500;letter-spacing:-.02em;line-height:1.05;margin-bottom:20px}
+  .m-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin-bottom:22px}
+  .m-grid span{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+  .m-grid b{font-weight:500;font-size:.95rem}
+  .m-body .m-desc{font-size:1.05rem;line-height:1.7;color:#3d332a;margin-bottom:24px}
+  .m-learn{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
+  .m-learn-list li{list-style:none;display:flex;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.98rem}
+  .m-learn-list svg{width:9px;height:9px;fill:var(--acc);flex:none;transform:translateY(-1px)}
+
+  /* ---------- toast ---------- */
+  #toast{
+    position:fixed;bottom:28px;left:50%;transform:translate(-50%,80px);z-index:1100;
+    background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:.78rem;
+    padding:13px 22px;border-radius:99px;display:flex;align-items:center;gap:10px;
+    transition:transform .45s cubic-bezier(.34,1.4,.5,1);pointer-events:none;
+  }
+  #toast.show{transform:translate(-50%,0)}
+  #toast svg{width:13px;height:13px;fill:#E39B7F}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.3,0,.2,1),transform .8s cubic-bezier(.3,0,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- responsivo ---------- */
+  @media (max-width:900px){
+    .nav-links{display:none}
+    #menuBtn{display:flex}
+    .nav-right .clock{display:none}
+    #sobre .grid{grid-template-columns:1fr}
+    .skill{grid-template-columns:44px 1fr 90px;grid-template-areas:"n name pct" "n desc desc" "n lvl lvl";row-gap:10px}
+    .skill .s-n{grid-area:n}.skill .s-name{grid-area:name}.skill .s-desc{grid-area:desc}
+    .skill .s-lvl{grid-area:lvl}.skill .s-pct{grid-area:pct}
+    .proj{grid-template-columns:44px 1fr 40px}
+    .proj .p-tags{display:none}
+    .hero-bottom{grid-template-columns:1fr;gap:18px}
+    .scroll-cue{display:none}
+    .hero-flor{top:14vh}
+    #preview{display:none}
+    .m-grid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- símbolo reutilizável: a flor-assinatura -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="flor" viewBox="0 0 24 24">
+    <path d="M12 0C13.8 7.2 16.8 10.2 24 12C16.8 13.8 13.8 16.8 12 24C10.2 16.8 7.2 13.8 0 12C7.2 10.2 10.2 7.2 12 0Z"/>
+  </symbol>
+</svg>
+
+<div id="progress"></div>
+
+<!-- ============ NAVEGAÇÃO ============ -->
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#inicio"><svg><use href="#flor"/></svg>mariana</a>
+    <nav class="nav-links">
+      <a href="#sobre">sobre</a>
+      <a href="#habilidades">habilidades</a>
+      <a href="#projetos">projetos</a>
+      <a href="#plano">o plano</a>
+      <a href="#contato">contato</a>
+    </nav>
+    <div class="nav-right">
+      <span class="clock" id="clock">--:--</span>
+      <span class="dot"></span>
+      <span>disponível p/ projetos</span>
+    </div>
+    <button id="menuBtn" aria-label="Abrir menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<div id="mobileMenu">
+  <p class="mm-label">— navegação</p>
+  <a href="#sobre">sobre</a>
+  <a href="#habilidades">habilidades</a>
+  <a href="#projetos">projetos</a>
+  <a href="#plano">o plano</a>
+  <a href="#contato">contato</a>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section id="inicio">
+  <svg class="hero-flor" viewBox="0 0 24 24"><use href="#flor"/></svg>
+  <div class="wrap">
+    <div class="hero-top">
+      <span>portfólio — desenvolvimento de sistemas</span>
+      <span>2025 · brasil</span>
+    </div>
+    <p class="hello">// olá, mundo — eu sou a</p>
+    <h1 id="bigName" aria-label="Mariana">Mariana</h1>
+    <p class="hero-pronoun">(17 anos · ela/dela · futuro em construção)</p>
+    <div class="hero-bottom">
+      <div>
+        <span class="hb-label">agora</span>
+        <p class="hb-now">Estudante de Desenvolvimento de Sistemas</p>
+      </div>
+      <div>
+        <span class="hb-label">depois</span>
+        <p class="hb-future">futuro na estética — e a tecnologia vai junto</p>
+      </div>
+      <div class="scroll-cue">
+        <svg viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1v17M1.5 12.5 7 18l5.5-5.5"/></svg>
+        <span>explore</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>HTML &amp; CSS <svg><use href="#flor"/></svg></span>
+    <span>JavaScript <svg><use href="#flor"/></svg></span>
+    <span>lógica de programação <svg><use href="#flor"/></svg></span>
+    <span>Git &amp; GitHub <svg><use href="#flor"/></svg></span>
+    <span>banco de dados <svg><use href="#flor"/></svg></span>
+    <span>skincare <svg><use href="#flor"/></svg></span>
+    <span>design de interfaces <svg><use href="#flor"/></svg></span>
+    <span>estética <svg><use href="#flor"/></svg></span>
+  </div>
+</div>
+
+<!-- ============ SOBRE ============ -->
+<section id="sobre">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num"><svg><use href="#flor"/></svg>01</span>
+      <h2>Sobre <em>mim</em></h2>
+    </div>
+    <div class="grid">
+      <div class="prose reveal">
+        <p>Escolhi Desenvolvimento de Sistemas por curiosidade — e fiquei pela sensação de ver uma ideia ganhar vida na tela. Hoje divido meu tempo entre as aulas, os projetos da escola e uma lista infinita de coisas que quero aprender.</p>
+        <p>Mas a minha história sempre teve um segundo capítulo: a <em>estética</em>. Cresceu comigo o interesse por skincare, por cuidado, por aquela sensação de sair de um atendimento melhor do que entrou.</p>
+        <p>O meu plano é não escolher entre os dois. Quero levar tecnologia para a beleza — agendamento inteligente, gestão de clínicas, experiências digitais que tratam as pessoas com o mesmo carinho de um bom atendimento presencial.</p>
+        <p>Enquanto esse futuro não chega, eu construo: <span class="assina">linha por linha, projeto por projeto.</span></p>
+        <div class="big17"><b>17</b> anos — e a meta já desenhada</div>
+      </div>
+      <div class="reveal" style="transition-delay:.12s">
+        <div class="code-card">
+          <div class="code-bar">
+            <span class="fname"><i></i>mariana.js</span>
+            <button class="run-btn" id="runCode">
+              <svg viewBox="0 0 10 10"><path d="M1 0l8 5-8 5z"/></svg>
+              executar
+            </button>
+          </div>
+<pre><span class="c-cm">// meus dados, como todo bom dev gosta</span>
+<span class="c-kw">const</span> <span class="c-pr">mariana</span> <span class="c-pu">=</span> <span class="c-pu">{</span>
+  <span class="c-pr">nome</span><span class="c-pu">:</span> <span class="c-st">"Mariana"</span><span class="c-pu">,</span>
+  <span class="c-pr">idade</span><span class="c-pu">:</span> <span class="c-fn">17</span><span class="c-pu">,</span>
+  <span class="c-pr">estudando</span><span class="c-pu">:</span> <span class="c-st">"Desenvolvimento de Sistemas"</span><span class="c-pu">,</span>
+  <span class="c-pr">sonhando</span><span class="c-pu">:</span> <span class="c-pu">[</span><span class="c-st">"estética"</span><span class="c-pu">,</span> <span class="c-st">"skincare"</span><span class="c-pu">,</span> <span class="c-st">"bem-estar"</span><span class="c-pu">],</span>
+  <span class="c-pr">stack</span><span class="c-pu">:</span> <span class="c-pu">[</span><span class="c-st">"HTML"</span><span class="c-pu">,</span> <span class="c-st">"CSS"</span><span class="c-pu">,</span> <span class="c-st">"JavaScript"</span><span class="c-pu">,</span> <span class="c-st">"Git"</span><span class="c-pu">],</span>
+  <span class="c-pr">cafesPorDia</span><span class="c-pu">:</span> <span class="c-fn">3</span><span class="c-pu">,</span>
+  <span class="c-pr">lema</span><span class="c-pu">:</span> <span class="c-st">"beleza também se compila"</span>
+<span class="c-pu">};</span>
+
+<span class="c-kw">function</span> <span class="c-fn">futuro</span><span class="c-pu">()</span> <span class="c-pu">{</span>
+  <span class="c-kw">return</span> mariana<span class="c-pu">.</span>estudando <span class="c-pu">+</span> <span class="c-st">" → estética"</span><span class="c-pu">;</span>
+<span class="c-pu">}</span>
+<span class="c-cm">// TODO: curso de estética (em breve)</span></pre>
+          <div class="console" id="console" aria-live="polite">
+            <p class="cl in">// clique em “executar” para me conhecer melhor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HABILIDADES ============ -->
+<section id="habilidades">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num"><svg><use href="#flor"/></svg>02</span>
+      <h2>O que sei <em>fazer</em></h2>
+    </div>
+    <div class="reveal">
+      <div class="list-head">
+        <span>índice de habilidades</span>
+        <span>atualizado ao longo do curso</span>
+      </div>
+      <div id="skillList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJETOS ============ -->
+<section id="projetos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num"><svg><use href="#flor"/></svg>03</span>
+      <h2>Projetos <em>favoritos</em></h2>
+    </div>
+    <div id="projList"></div>
+    <p class="proj-foot reveal">— clique em qualquer projeto para ver os detalhes</p>
+  </div>
+</section>
+
+<!-- ============ O PLANO ============ -->
+<section id="plano">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num"><svg><use href="#flor"/></svg>04</span>
+      <h2>O <em>plano</em></h2>
+    </div>
+    <p class="manifesto reveal">Código hoje, estética amanhã — e nos dois, <i>o cuidado com os detalhes.</i></p>
+    <div class="timeline">
+      <div class="t-item reveal">
+        <svg class="t-flor"><use href="#flor"/></svg>
+        <span class="t-when">agora — 2025</span>
+        <h3>Curso técnico em Desenvolvimento de Sistemas</h3>
+        <p>Lógica de programação, desenvolvimento web, banco de dados. Cada aula rende um projeto novo para o portfólio — porque teoria sem prática, pra mim, não fixa.</p>
+        <span class="t-tag">em andamento</span>
+      </div>
+      <div class="t-item reveal">
+        <svg class="t-flor"><use href="#flor"/></svg>
+        <span class="t-when">próximo — 2026 em diante</span>
+        <h3>Primeira experiência profissional</h3>
+        <p>Estágio ou júnior na área de tecnologia, projetos reais para clientes de verdade e um portfólio crescendo junto com a minha confiança.</p>
+        <span class="t-tag">próximo capítulo</span>
+      </div>
+      <div class="t-item sonho reveal">
+        <svg class="t-flor"><use href="#flor"/></svg>
+        <span class="t-when">um dia — o plano grande</span>
+        <h3>Estética, com tecnologia própria</h3>
+        <p>Especialização na área da estética e, no meu estúdio, sistemas que eu mesma escrevi: agendamento sem estresse, gestão de clientes, uma experiência digital tão cuidadosa quanto o atendimento presencial.</p>
+        <span class="t-tag">o destino</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTATO ============ -->
+<section id="contato">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num"><svg><use href="#flor"/></svg>05</span>
+      <h2>Vamos <em>conversar?</em></h2>
+    </div>
+    <p class="contact-lead reveal">Aberta a projetos de estudo, colaborações e papos sobre beleza &amp; código. Clique no e-mail abaixo para copiá-lo — prometo responder rápido.</p>
+    <div class="reveal">
+      <button class="email-btn" id="emailBtn" aria-label="Copiar e-mail">
+        mariana.dev@email.com
+        <svg class="copy-ico" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+      </button>
+      <p class="contact-hint">// clique para copiar para a área de transferência</p>
+    </div>
+    <div class="socials reveal">
+      <div><span>GitHub</span><b>@mariana<b>.codes</b></b></div>
+      <div><span>Instagram</span><b>@mari<b>.de</b>glow</b></div>
+      <div><span>Escola</span><b>Curso Técnico em <i>DS</i></b></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2025 Mariana — feito à mão com HTML, CSS e JS puros</span>
+    <span>vai ter flor <svg class="f-flor"><use href="#flor"/></svg> e vai ter código</span>
+  </div>
+</footer>
+
+<!-- preview flutuante dos projetos -->
+<div id="preview" aria-hidden="true"><div class="tint"></div><img id="previewImg" src="" alt=""></div>
+
+<!-- modal de projeto -->
+<div id="modalOverlay"></div>
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="m-media">
+    <button class="m-close" id="modalClose" aria-label="Fechar"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.8"><path d="M1 1l12 12M13 1 1 13"/></svg></button>
+    <img id="mImg" src="" alt="">
+  </div>
+  <div class="m-body">
+    <div class="m-meta-top"><span id="mNum">proj. 01</span><span class="m-status" id="mStatus"></span></div>
+    <h3 id="mTitle"></h3>
+    <div class="m-grid">
+      <div><span>ano</span><b id="mYear"></b></div>
+      <div><span>stack</span><b id="mStack"></b></div>
+    </div>
+    <p class="m-desc" id="mDesc"></p>
+    <p class="m-learn">o que levei desse projeto</p>
+    <ul class="m-learn-list" id="mLearn"></ul>
+  </div>
+</div>
+
+<!-- toast -->
+<div id="toast"><svg><use href="#flor"/></svg><span id="toastMsg"></span></div>
+
+<script>
+/* ============================================================
+   portfólio da Mariana — tudo aqui é JS puro, sem frameworks
+   ============================================================ */
+
+/* ---------- dados ---------- */
+const SKILLS = [
+  { n:"01", name:"HTML & CSS",            desc:"estruturar e estilizar páginas com carinho", lvl:"confiante",           pct:80 },
+  { n:"02", name:"JavaScript",            desc:"dar vida e interação às minhas ideias",      lvl:"aprendendo na prática", pct:55 },
+  { n:"03", name:"Lógica de Programação", desc:"pensar problemas como pequenos algoritmos",  lvl:"sólida",              pct:75 },
+  { n:"04", name:"Git & GitHub",          desc:"versionar e organizar tudo o que faço",      lvl:"no dia a dia",        pct:60 },
+  { n:"05", name:"Banco de Dados",        desc:"guardar e consultar informações",            lvl:"começando agora",     pct:35 },
+  { n:"06", name:"Design & Estética",     desc:"compor, alinhar, pensar em quem vai usar",   lvl:"paixão de longa data", pct:90 }
+];
+
+const PROJECTS = [
+  {
+    id:"glow", num:"proj. 01", title:"Glow Agenda", tags:"JS · localStorage", seed:"glowagenda",
+    year:"2025", stack:"HTML · CSS · JavaScript", status:"em desenvolvimento",
+    desc:"Um sistema de agendamento pensado para salões de beleza: a cliente marca o horário, a profissional vê a agenda do dia organizada. É o projeto onde os meus dois mundos finalmente conversam.",
+    learn:["Manipulação de DOM e eventos","Persistência de dados com localStorage","Desenhar um fluxo de usuário simples e agradável"]
+  },
+  {
+    id:"rotina", num:"proj. 02", title:"Rotina & Glow", tags:"JS · progresso diário", seed:"rotinaglow",
+    year:"2025", stack:"HTML · CSS · JavaScript", status:"concluído",
+    desc:"Um app de checklist de skincare com barra de progresso e histórico da semana. Nasceu de uma planilha minha que ficou bonita demais para ficar escondida.",
+    learn:["Arrays, objetos e estado da aplicação","Animar progresso sem perder leveza","Pensar em responsividade desde o início"]
+  },
+  {
+    id:"aurora", num:"proj. 03", title:"Aurora Cosméticos", tags:"HTML · CSS", seed:"auroracosmeticos",
+    year:"2024", stack:"HTML · CSS", status:"concluído",
+    desc:"A landing page de uma loja fictícia de cosméticos — meu primeiro design do início ao fim, escolhendo cada cor e cada espaço em branco. Foi aqui que percebi quanto gosto da parte visual.",
+    learn:["Grid e Flexbox na prática","Tipografia e hierarquia visual","A importância de um bom espaço em branco"]
+  },
+  {
+    id:"portfolio", num:"proj. 04", title:"Este Portfólio", tags:"HTML · CSS · JS", seed:"portfoliomari",
+    year:"2025", stack:"HTML · CSS · JavaScript puros", status:"você está aqui",
+    desc:"Feito à mão, sem frameworks. A fonte do meu nome reage ao movimento do mouse, o código da seção sobre é executável de verdade e cada detalhe foi escolhido a dedo.",
+    learn:["Fontes variáveis e seus eixos animáveis","IntersectionObserver para revelar seções","Que paciência também é uma habilidade de dev"]
+  }
+];
+
+/* ---------- utilidades ---------- */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const lerp = (a,b,t) => a + (b-a)*t;
+
+/* ---------- relógio do header ---------- */
+function tickClock(){
+  const t = new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit'}).format(new Date());
+  $('#clock').textContent = t + ' — horário local';
+}
+tickClock(); setInterval(tickClock, 10000);
+
+/* ---------- barra de progresso ---------- */
+const prog = $('#progress');
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, {passive:true});
+
+/* ---------- menu mobile ---------- */
+const menuBtn = $('#menuBtn'), mobileMenu = $('#mobileMenu');
+const mmLinks = $$('#mobileMenu a');
+function toggleMenu(force){
+  const open = force !== undefined ? force : !mobileMenu.classList.contains('open');
+  mobileMenu.classList.toggle('open', open);
+  menuBtn.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  mmLinks.forEach((a,i) => a.style.transitionDelay = open ? (0.1 + i*0.06)+'s' : '0s');
+}
+menuBtn.addEventListener('click', () => toggleMenu());
+mmLinks.forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+/* ---------- nome variável que reage ao mouse ---------- */
+const bigName = $('#bigName');
+bigName.innerHTML = [...bigName.textContent].map(c => `<span class="ltr">${c}</span>`).join('');
+const letters = $$('#bigName .ltr').map(el => ({
+  el, w:480, s:0, tw:480, ts:0
+}));
+let mouseX = -9999, mouseY = -9999, lastMove = 0;
+
+addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY; lastMove = performance.now();
+}, {passive:true});
+
+let rects = [];
+function cacheRects(){ rects = letters.map(o => o.el.getBoundingClientRect()); }
+addEventListener('resize', cacheRects);
+addEventListener('scroll', cacheRects, {passive:true});
+addEventListener('load', cacheRects);
+cacheRects();
+
+(function nameLoop(now){
+  const idle = performance.now() - lastMove > 3000; // sem mouse? entra a onda automática
+  const t = now / 1000;
+  letters.forEach((o, i) => {
+    let infl;
+    if (idle) {
+      infl = (Math.sin(t*1.6 - i*0.85) + 1) / 2 * 0.55;   // onda serpenteando pelas letras
+    } else {
+      const r = rects[i];
+      const dx = mouseX - (r.left + r.width/2);
+      const dy = mouseY - (r.top + r.height/2);
+      const d = Math.hypot(dx, dy);
+      infl = Math.max(0, 1 - d / 260);
+      infl = infl * infl * (3 - 2 * infl); // suavização
+    }
+    o.tw = 440 + 460 * infl;   // peso: de médio a extrablack
+    o.ts = 100 * infl;         // SOFT: contornos arredondam perto do cursor
+    o.w = lerp(o.w, o.tw, 0.14);
+    o.s = lerp(o.s, o.ts, 0.14);
+    const wonk = (o.w > 720) ? 1 : 0; // bem perto, as letras ganham o charme "torto" do Fraunces
+    o.el.style.fontVariationSettings = `'opsz' 144,'wght' ${o.w.toFixed(0)},'SOFT' ${o.s.toFixed(1)},'WONK' ${wonk}`;
+  });
+  requestAnimationFrame(nameLoop);
+})(0);
+
+/* ---------- habilidades ---------- */
+ $('#skillList').innerHTML = SKILLS.map(s => `
+  <div class="skill reveal">
+    <span class="s-n">${s.n}</span>
+    <span class="s-name">${s.name}</span>
+    <span class="s-desc">${s.desc}</span>
+    <span class="s-lvl"><span>${s.lvl}</span><span class="s-bar"><i data-lvl="${s.pct}"></i></span></span>
+    <span class="s-pct">${s.pct}%</span>
+  </div>`).join('');
+
+/* ---------- projetos ---------- */
+ $('#projList').innerHTML = PROJECTS.map((p,i) => `
+  <article class="proj reveal" data-id="${p.id}" data-seed="${p.seed}" tabindex="0" role="button" aria-label="Abrir detalhes de ${p.title}">
+    <span class="p-n">0${i+1}</span>
+    <h3 class="p-title">${p.title}</h3>
+    <span class="p-tags">${p.tags}</span>
+    <span class="p-arrow"><svg viewBox="0 0 14 14" fill="none" stroke-width="1.6"><path d="M1 13 13 1M4 1h9v9"/></svg></span>
+  </article>`).join('');
+
+/* preview flutuante (só em telas com hover) */
+const preview = $('#preview'), previewImg = $('#previewImg');
+const canHover = matchMedia('(hover:hover)').matches;
+let px = 0, py = 0, tx = 0, ty = 0, prevPx = 0;
+
+if (canHover) {
+  $$('.proj').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      previewImg.src = `https://picsum.photos/seed/${item.dataset.seed}/560/380.jpg`;
+      preview.classList.add('on');
+    });
+    item.addEventListener('mouseleave', () => preview.classList.remove('on'));
+  });
+  addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; }, {passive:true});
+  (function previewLoop(){
+    px = lerp(px, tx, 0.12); py = lerp(py, ty, 0.12);
+    const vel = Math.max(-8, Math.min(8, (px - prevPx) * 0.7)); // inclina com a velocidade
+    prevPx = px;
+    preview.style.transform = `translate(${px - 140}px, ${py + 30}px) rotate(${vel}deg)`;
+    requestAnimationFrame(previewLoop);
+  })();
+}
+
+/* ---------- modal ---------- */
+const overlay = $('#modalOverlay'), modal = $('#modal');
+function openModal(id){
+  const p = PROJECTS.find(x => x.id === id); if (!p) return;
+  $('#mNum').textContent = p.num;
+  $('#mStatus').textContent = p.status;
+  $('#mTitle').textContent = p.title;
+  $('#mYear').textContent = p.year;
+  $('#mStack').textContent = p.stack;
+  $('#mDesc').textContent = p.desc;
+  $('#mImg').src = `https://picsum.photos/seed/${p.seed}/900/500.jpg`;
+  $('#mLearn').innerHTML = p.learn.map(l => `<li><svg><use href="#flor"/></svg>${l}</li>`).join('');
+  overlay.classList.add('open'); modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  overlay.classList.remove('open'); modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+ $$('.proj').forEach(item => {
+  item.addEventListener('click', () => openModal(item.dataset.id));
+  item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(item.dataset.id); } });
+});
+ $('#modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
+addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); toggleMenu(false); } });
+
+/* ---------- console executável ---------- */
+const consoleEl = $('#console');
+let typing = false;
+const OUTPUT = [
+  { t:'in',  txt:'> futuro()' },
+  { t:'out', txt:'"Desenvolvimento de Sistemas → estética"' },
+  { t:'in',  txt:'> mariana.lema' },
+  { t:'out', txt:'"beleza também se compila"' },
+  { t:'in',  txt:'> mariana.status()' },
+  { t:'out', txt:'"aprendendo, sempre."' }
+];
+function typeLines(lines, i = 0){
+  if (i >= lines.length) { typing = false; return; }
+  const line = lines[i];
+  const div = document.createElement('p');
+  div.className = 'cl ' + line.t;
+  consoleEl.appendChild(div);
+  let j = 0;
+  (function tick(){
+    if (j <= line.txt.length) {
+      div.innerHTML = line.txt.slice(0, j) + '<span class="caret"></span>';
+      j++; setTimeout(tick, 18);
+    } else {
+      div.textContent = line.txt;
+      setTimeout(() => typeLines(lines, i+1), 220);
+    }
+  })();
+}
+ $('#runCode').addEventListener('click', () => {
+  if (typing) return;
+  typing = true;
+  consoleEl.innerHTML = '';
+  typeLines(OUTPUT);
+});
+
+/* ---------- copiar e-mail + toast ---------- */
+const toast = $('#toast'); let toastTimer;
+function showToast(msg){
+  $('#toastMsg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+}
+ $('#emailBtn').addEventListener('click', () => {
+  const email = 'mariana.dev@email.com';
+  const done = () => showToast('e-mail copiado — te vejo na caixa de entrada');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(done).catch(() => fallbackCopy(email, done));
+  } else fallbackCopy(email, done);
+});
+function fallbackCopy(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch(e) { showToast('não consegui copiar — anota aí: ' + text); }
+  ta.remove();
+}
+
+/* ---------- reveal ao rolar ---------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+  });
+}, { threshold: 0.12 });
+ $$('.reveal').forEach(el => io.observe(el));
+
+/* barras de habilidade animam quando aparecem */
+const ioBars = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) { en.target.style.width = en.target.dataset.lvl + '%'; ioBars.unobserve(en.target); }
+  });
+}, { threshold: 0.5 });
+ $$('.s-bar i').forEach(el => ioBars.observe(el));
+
+/* duplica o marquee para o loop ficar perfeito */
+const track = $('#marqueeTrack');
+track.innerHTML += track.innerHTML;
+</script>
+</body>
+</html>
